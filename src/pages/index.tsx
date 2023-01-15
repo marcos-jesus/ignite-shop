@@ -1,3 +1,4 @@
+import { styled } from '@/styles'
 import { Roboto } from '@next/font/google'
 
 const roboto = Roboto({
@@ -6,7 +7,30 @@ const roboto = Roboto({
   subsets:['latin']
 })
 
+const Button = styled('button', {
+  backgroundColor: '$rocketseat',
+  borderRadius: 4,
+  border: 0,
+  width: 80,
+  padding: ' 4px 8px',
+
+  span: {
+    fontWeight: 'bold',
+  },
+
+  '&:hover': {
+    filter: 'brightness(0.8)'
+  },
+})
+
 
 export default function Home() {
-  return <h1 className={roboto.className}>Hello World</h1>
+  return (
+
+    <Button>
+      <span>Teste</span>
+      Enviar
+    </Button>
+
+  )
 }
