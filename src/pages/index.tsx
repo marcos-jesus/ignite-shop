@@ -8,7 +8,7 @@ const roboto = Roboto({
 })
 
 const Button = styled('button', {
-  backgroundColor: '$rocketseat',
+  backgroundColor: '$green500',
   borderRadius: 4,
   border: 0,
   width: 80,
