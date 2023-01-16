@@ -6,6 +6,8 @@ import { stripe } from "@/lib/stripe"
 
 
 import { ImageContainer, ProductContainer, ProductDescription } from "@/styles/pages/produto"
+import axios from "axios"
+import { useState } from "react"
 
 interface ProductProps {
   product: {
@@ -14,16 +16,38 @@ interface ProductProps {
     imageUrl: string,
     price: string,
     description: string,
+    defaultPriceId: string;
   }
 }
 export default function ProdutoId({ product }: ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+  async function handleBuyProduct() {
+    try {
+
+      setIsCreatingCheckoutSession(true)
+
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+
+      setIsCreatingCheckoutSession(false)
+
+      alert('Falha ao redirecionar ao checkout!')
+    }
+
+  }
   const { query, isFallback } = useRouter()
 
   if(isFallback) {
     return <h1> Loading...</h1>
   }
 
-  
   return (
     <ProductContainer>
       <ImageContainer>
@@ -35,7 +59,7 @@ export default function ProdutoId({ product }: ProductProps) {
         <span>{product.price}</span>
         <p>{product.description}</p>
       
-        <button>
+        <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>
           Comprar agora
         </button>
       </ProductDescription>
@@ -57,7 +81,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
   const productId = params.id
 
   const product = await stripe.products.retrieve(productId, {
-    expand: ['default_price']
+    expand: ['default_price'],
   })
 
   const price = product.default_price as Stripe.Price
@@ -73,6 +97,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
           currency: 'BRL'
         }).format(price.unit_amount / 100),
         description: product.description,
+        defaultPriceId: price.id
       }
     },
     revalidate: 60 * 60 * 2
