@@ -11,7 +11,7 @@ export const ProductContainer = styled('main', {
   margin: '0 auto',
   padding: '5rem',
 })
-export const ImageContainer = styled('img', {
+export const ImageContainer = styled('div', {
   width: '100%',
   maxWidth: 576,
   height: 'calc(656px - 10rem)',

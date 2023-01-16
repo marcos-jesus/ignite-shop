@@ -1,4 +1,6 @@
-import { GetStaticProps } from "next"
+import { GetStaticPaths, GetStaticProps } from "next" 
+import Image from "next/image"
+import { useRouter } from 'next/router'
 import Stripe from "stripe"
 import { stripe } from "@/lib/stripe"
 
@@ -15,19 +17,23 @@ interface ProductProps {
   }
 }
 export default function ProdutoId({ product }: ProductProps) {
+  const { query, isFallback } = useRouter()
+
+  if(isFallback) {
+    return <h1> Loading...</h1>
+  }
+
+  
   return (
     <ProductContainer>
-      <pre>
-        {JSON.stringify(product)}
-      </pre>
       <ImageContainer>
-      
+        <Image src={product.imageUrl} width={480} height={480} alt="" />
       </ImageContainer>
 
       <ProductDescription>
-        <h1>Camiseta X</h1>
-        <span>R$ 79,00</span>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque facilis sed doloremque placeat, saepe sit alias, quisquam exercitationem provident illum numquam assumenda, tempora obcaecati enim cum recusandae nesciunt nam ullam?</p>
+        <h1>{product.name }</h1>
+        <span>{product.price}</span>
+        <p>{product.description}</p>
       
         <button>
           Comprar agora
@@ -37,7 +43,14 @@ export default function ProdutoId({ product }: ProductProps) {
   )
 }
 
-
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [
+      { params: { id: 'prod_NAyJZEm29Szh6w'}}
+    ],
+    fallback: true,
+  }
+}
 
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params }) => {
   
