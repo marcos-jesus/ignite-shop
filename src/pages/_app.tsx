@@ -7,11 +7,19 @@ import Image from 'next/image'
 
 import logoImg from '../assets/logo.svg'
 
+import { Roboto } from '@next/font/google'
+
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets:['latin']
+})
+
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Container>
+    <Container className={roboto.className}>
       <Header>
         <Image src={logoImg} alt="" />
       </Header>
