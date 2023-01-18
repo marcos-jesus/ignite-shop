@@ -5,7 +5,6 @@ import { GetServerSideProps } from "next";
 import Link from 'next/link'
 import Image from "next/image";
 
-
 interface SuccessProps {
   customerName: string
   product: {
@@ -13,7 +12,6 @@ interface SuccessProps {
     imageUrl: string
   }
 }
-
 
 export default function Success({ customerName, product}: SuccessProps) {
   return (
