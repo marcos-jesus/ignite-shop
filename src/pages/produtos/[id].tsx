@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from "next" 
 import Image from "next/image"
+import Head from "next/head"
 import { useRouter } from 'next/router'
 import Stripe from "stripe"
 import { stripe } from "@/lib/stripe"
@@ -49,7 +50,12 @@ export default function ProdutoId({ product }: ProductProps) {
   }
 
   return (
-    <ProductContainer>
+    <>
+      <Head>
+        <title> {product.name}</title>
+      </Head>
+
+      <ProductContainer>
       <ImageContainer>
         <Image src={product.imageUrl} width={480} height={480} alt="" />
       </ImageContainer>
@@ -64,6 +70,7 @@ export default function ProdutoId({ product }: ProductProps) {
         </button>
       </ProductDescription>
     </ProductContainer>
+    </>
   )
 }
 
