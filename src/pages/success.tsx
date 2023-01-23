@@ -18,7 +18,7 @@ export default function Success({ customerName, product}: SuccessProps) {
   return (
     <>
       <Head>
-        <title> Compra efetuada | Ignite Shop</title>
+        <title> Compra efetuada | Dev Shop</title>
         <meta name="robots" content="noindex" />
       </Head>
 
@@ -26,7 +26,7 @@ export default function Success({ customerName, product}: SuccessProps) {
       <h1>Compra efetuada!</h1>
 
       <ImageContainer>
-        <Image src={product.imageUrl} width={200} height={180} alt="" />
+        <Image src={product.imageUrl} width={180} height={150} alt="" />
       </ImageContainer>
 
       <p>

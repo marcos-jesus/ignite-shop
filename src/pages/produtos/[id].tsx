@@ -43,6 +43,7 @@ export default function ProdutoId({ product }: ProductProps) {
     }
 
   }
+  
   const { query, isFallback } = useRouter()
 
   if(isFallback) {
@@ -57,7 +58,7 @@ export default function ProdutoId({ product }: ProductProps) {
 
       <ProductContainer>
       <ImageContainer>
-        <Image src={product.imageUrl} width={480} height={480} alt="" />
+        <Image src={product.imageUrl} width={380} height={480} alt="" />
       </ImageContainer>
 
       <ProductDescription>
