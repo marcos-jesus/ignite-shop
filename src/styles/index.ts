@@ -22,12 +22,14 @@ export const {
 
       green500: '#00875f',
       green300: '#00b37e',
+      green700: '#015F43',
       
       blue100: '#4CC9F0',
       blue300: '#2E9AFE',
       blue500: '#0080FF',
 
       pink900: '#F72585',
+
 
     },
 
