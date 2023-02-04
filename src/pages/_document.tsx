@@ -3,8 +3,11 @@ import { getCssText } from '../styles'
 export default function Document() {
   return (
     <Html lang="ptBR">
-      <Head> 
-        <style id='stitches' dangerouslySetInnerHTML={{__html: getCssText()}}/>
+      <Head>
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
       </Head>
       <body>
         <Main />

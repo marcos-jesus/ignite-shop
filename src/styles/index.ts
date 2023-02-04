@@ -8,7 +8,7 @@ export const {
   getCssText,
   theme,
   createTheme,
-  css
+  css,
 } = createStitches({
   theme: {
     colors: {
@@ -23,21 +23,19 @@ export const {
       green500: '#00875f',
       green300: '#00b37e',
       green700: '#015F43',
-      
+
       blue100: '#4CC9F0',
       blue300: '#2E9AFE',
       blue500: '#0080FF',
 
       pink900: '#F72585',
-
-
     },
 
     fontSizes: {
       md: '1.125rem',
       lg: '1.25rem',
       xl: '1.5rem',
-      '2xl': '2rem'
-    }
-  }
+      '2xl': '2rem',
+    },
+  },
 })

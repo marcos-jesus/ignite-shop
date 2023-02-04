@@ -1,7 +1,7 @@
 import { styled } from '@/styles'
 
 export const HomeContainer = styled('main', {
-  display:'flex',
+  display: 'flex',
   width: '100%',
   maxWidth: 'calc(100vw - ((100vw - 1180px) / 2))',
   marginLeft: 'auto',
@@ -18,11 +18,11 @@ export const Product = styled('div', {
   minWidth: 540,
 
   display: 'flex',
-  alignItems:'center',
+  alignItems: 'center',
   justifyContent: 'center',
 
   img: {
-    objectFit: 'cover'
+    objectFit: 'cover',
   },
 
   footer: {
@@ -42,7 +42,7 @@ export const Product = styled('div', {
 
     transform: 'translateY(110%)',
     opacity: 0,
-    transition:'all 0.2s ease-in-out',
+    transition: 'all 0.2s ease-in-out',
 
     strong: {
       fontSize: '$lg',
@@ -53,14 +53,13 @@ export const Product = styled('div', {
       fontSize: '$xl',
       fontWeight: 'bold',
       color: '$green300',
-    }
-
+    },
   },
 
   '&:hover': {
     footer: {
       transform: 'translateY(0%)',
-      opacity: 1
-    }
-  }
+      opacity: 1,
+    },
+  },
 })

@@ -1,15 +1,18 @@
-import { stripe } from '@/lib/stripe';
-import { NextApiRequest, NextApiResponse } from "next";
+import { stripe } from '@/lib/stripe'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handleCheckout(request: NextApiResponse, response: NextApiRequest) {
+export default async function handleCheckout(
+  request: NextApiResponse,
+  response: NextApiRequest,
+) {
   const { priceId } = request.body
 
   if (request.method !== 'POST') {
-    return response.status(405).json({error: 'Method not allowed'})
+    return response.status(405).json({ error: 'Method not allowed' })
   }
 
-  if(!priceId) {
-    return response.status(400).json({error: 'Price not found'})
+  if (!priceId) {
+    return response.status(400).json({ error: 'Price not found' })
   }
 
   const successUrl = `${process.env.NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`
@@ -22,12 +25,12 @@ export default async function handleCheckout(request: NextApiResponse, response:
     line_items: [
       {
         price: priceId,
-        quantity: 1
-      }
+        quantity: 1,
+      },
     ],
   })
 
   return response.status(201).json({
-    checkoutUrl: checkoutSession.url
+    checkoutUrl: checkoutSession.url,
   })
 }

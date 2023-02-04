@@ -1,5 +1,4 @@
-import { styled } from '@/styles';
-
+import { styled } from '@/styles'
 
 export const ProductContainer = styled('main', {
   display: 'grid',
@@ -51,23 +50,20 @@ export const ProductDescription = styled('div', {
     background: '$green500',
     border: 0,
     borderRadius: 8,
-    padding:'1.5rem',
+    padding: '1.5rem',
     color: '$gray500',
     fontSize: '$md',
     fontWeight: 'bold',
-    cursor:'pointer',
+    cursor: 'pointer',
 
     '&:disabled': {
       opacity: 0.6,
       cursor: 'not-allowed',
     },
 
-    '&:not(:disabled):hover' : {
+    '&:not(:disabled):hover': {
       backgroundColor: '$green300',
-      transition: '0.2s'
-    }
-
+      transition: '0.2s',
+    },
   },
-
-  
 })
