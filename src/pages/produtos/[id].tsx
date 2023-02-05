@@ -11,7 +11,7 @@ import {
   ImageContainer,
   ProductContainer,
   ProductDescription,
-  LinkButton
+  LinkButton,
 } from '@/styles/pages/produto'
 import axios from 'axios'
 import { useState } from 'react'
@@ -24,7 +24,7 @@ export interface ProductProps {
     price: string
     description: string
     defaultPriceId: string
-    defaultPriceProduct: string,
+    defaultPriceProduct: string
   }
 }
 export default function ProdutoId({ product }: ProductProps) {
@@ -83,7 +83,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         }).format(price.unit_amount / 100),
         description: product.description,
         defaultPriceId: price.id,
-        defaultPriceProduct: price.product
+        defaultPriceProduct: price.product,
       },
     },
     revalidate: 60 * 60 * 2,

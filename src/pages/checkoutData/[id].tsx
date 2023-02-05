@@ -1,11 +1,5 @@
 import { Roboto } from '@next/font/google'
 
-const roboto = Roboto({
-    weight: ['400', '700'],
-    style: ['normal'],
-    subsets: ['latin'],
-})
-
 import {
   Container,
   Checkout,
@@ -18,7 +12,6 @@ import { ShoppingCart } from 'phosphor-react'
 
 import { useForm } from 'react-hook-form'
 
-
 import axios from 'axios'
 
 import { useState } from 'react'
@@ -27,63 +20,60 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+})
 
-export default function getCheckoutData({product}):ProductProps {
+export default function getCheckoutData({ product }): ProductProps {
   const { register, handleSubmit, setValue, setFocus } = useForm()
-  
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
-  
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
+
   async function handleBuyProduct() {
     try {
       setIsCreatingCheckoutSession(true)
-      
+
       const response = await axios.post('/api/checkout', {
         priceId: product.defaultPriceId,
       })
-      
+
       const { checkoutUrl } = response.data
-      
+
       window.location.href = checkoutUrl
     } catch (err) {
       setIsCreatingCheckoutSession(false)
-      
+
       alert('Falha ao redirecionar ao checkout!')
     }
   }
-  
-  let  [dataForm, setDataForm] = useState([])
+
+  const [dataForm, setDataForm] = useState([])
 
   function handleGetData(data) {
     const newData = data
 
     setDataForm(newData)
-
-    // 1 - Redirecionar o cliente para a API de Pagamento
-
-    // 2 - Se o Pagamento foi confirmado enviar o newData para o e-mail com os produtos comprados.
-
-
   }
 
-  const checkCep = (e:any) => {
+  const checkCep = (e: any) => {
     const cep = e.target.value.replace(/\D/g, '')
 
     axios.get(`https://viacep.com.br/ws/${cep}/json/`).then((response) => {
-        const datas = response.data
-        const temp = []
-        temp.push(datas)
+      const datas = response.data
+      const temp = []
+      temp.push(datas)
 
-        temp.map((data) => {
-            setValue('endereco', data.logradouro)
-            setValue('bairro', data.bairro)
-            setValue('cidade', data.localidade)
-            setValue('estado', data.uf)
-            setFocus('numero')
-        })
-       
+      temp.map((data) => {
+        setValue('endereco', data.logradouro)
+        setValue('bairro', data.bairro)
+        setValue('cidade', data.localidade)
+        setValue('estado', data.uf)
+        setFocus('numero')
+      })
     })
-   
   }
 
   return (
@@ -96,11 +86,7 @@ export default function getCheckoutData({product}):ProductProps {
               placeholder="Nome completo"
               {...register('name')}
             />
-            <Input 
-                type="email" 
-                placeholder="E-mail" 
-                {...register('email')} 
-            />
+            <Input type="email" placeholder="E-mail" {...register('email')} />
           </Checkout>
 
           <Checkout>
@@ -111,11 +97,7 @@ export default function getCheckoutData({product}):ProductProps {
               onBlur={checkCep}
             />
 
-            <Input
-              type="text"
-              placeholder="Estado"
-              {...register('estado')}
-            />
+            <Input type="text" placeholder="Estado" {...register('estado')} />
             <Input type="text" placeholder="Cidade" {...register('cidade')} />
 
             <Input
@@ -126,28 +108,20 @@ export default function getCheckoutData({product}):ProductProps {
           </Checkout>
 
           <Checkout>
-          
-            <Input
-              placeholder="Número"
-              {...register('numero')}
-            />
+            <Input placeholder="Número" {...register('numero')} />
             <Input
               type="text"
               placeholder="Complemento"
               {...register('complemento')}
             />
           </Checkout>
-          
+
           <Checkout>
-            <Input
-              type="text"
-              placeholder="Bairro"
-              {...register('bairro')}
-            />
+            <Input type="text" placeholder="Bairro" {...register('bairro')} />
           </Checkout>
-          <ButtonBuy 
+          <ButtonBuy
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct} 
+            onClick={handleBuyProduct}
           >
             <ShoppingCart size={22} />
             Confirmar compra
@@ -165,7 +139,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params}) => {
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
+  params,
+}) => {
   const productId = params.id
 
   const product = await stripe.products.retrieve(productId, {
@@ -179,14 +155,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
     props: {
       product: {
         id: product.id,
-        name: product.name,
-        imageUrl: product.images[0],
-        price: new Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(price.unit_amount / 100),
-        description: product.description,
-        defaultPriceId: price.id,
+        defaultPriceId: price.id  
       },
     },
     revalidate: 60 * 60 * 2,

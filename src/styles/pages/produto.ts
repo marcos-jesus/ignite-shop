@@ -45,29 +45,28 @@ export const ProductDescription = styled('div', {
     lineHeight: 1.6,
     color: '$gray300',
   },
-
 })
 
-export const LinkButton = styled(Link , {
+export const LinkButton = styled(Link, {
   marginTop: 'auto',
-    background: '$green500',
-    border: 0,
-    borderRadius: 8,
-    padding: '1.5rem',
-    color: '$gray500',
-    fontSize: '$md',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    textAlign: 'center',
-    textDecoration: 'none',
-    
-    '&:disabled': {
-      opacity: 0.6,
-      cursor: 'not-allowed',
-    },
+  background: '$green500',
+  border: 0,
+  borderRadius: 8,
+  padding: '1.5rem',
+  color: '$gray500',
+  fontSize: '$md',
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  textAlign: 'center',
+  textDecoration: 'none',
 
-    '&:not(:disabled):hover': {
-      backgroundColor: '$green300',
-      transition: '0.2s',
-    },
+  '&:disabled': {
+    opacity: 0.6,
+    cursor: 'not-allowed',
+  },
+
+  '&:not(:disabled):hover': {
+    backgroundColor: '$green300',
+    transition: '0.2s',
+  },
 })
