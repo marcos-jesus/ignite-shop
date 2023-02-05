@@ -1,4 +1,5 @@
 import { styled } from '@/styles'
+import Link from 'next/link'
 
 export const ProductContainer = styled('main', {
   display: 'grid',
@@ -45,8 +46,10 @@ export const ProductDescription = styled('div', {
     color: '$gray300',
   },
 
-  button: {
-    marginTop: 'auto',
+})
+
+export const LinkButton = styled(Link , {
+  marginTop: 'auto',
     background: '$green500',
     border: 0,
     borderRadius: 8,
@@ -55,7 +58,9 @@ export const ProductDescription = styled('div', {
     fontSize: '$md',
     fontWeight: 'bold',
     cursor: 'pointer',
-
+    textAlign: 'center',
+    textDecoration: 'none',
+    
     '&:disabled': {
       opacity: 0.6,
       cursor: 'not-allowed',
@@ -65,5 +70,4 @@ export const ProductDescription = styled('div', {
       backgroundColor: '$green300',
       transition: '0.2s',
     },
-  },
 })

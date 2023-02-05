@@ -5,15 +5,18 @@ import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
+import Link from 'next/link'
+
 import {
   ImageContainer,
   ProductContainer,
   ProductDescription,
+  LinkButton
 } from '@/styles/pages/produto'
 import axios from 'axios'
 import { useState } from 'react'
 
-interface ProductProps {
+export interface ProductProps {
   product: {
     id: string
     name: string
@@ -21,36 +24,10 @@ interface ProductProps {
     price: string
     description: string
     defaultPriceId: string
+    defaultPriceProduct: string,
   }
 }
 export default function ProdutoId({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
-
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (err) {
-      setIsCreatingCheckoutSession(false)
-
-      alert('Falha ao redirecionar ao checkout!')
-    }
-  }
-
-  const { query, isFallback } = useRouter()
-
-  if (isFallback) {
-    return <h1> Loading...</h1>
-  }
-
   return (
     <>
       <Head>
@@ -67,12 +44,9 @@ export default function ProdutoId({ product }: ProductProps) {
           <span>{product.price}</span>
           <p>{product.description}</p>
 
-          <button
-            disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
-          >
+          <LinkButton href={`/checkoutData/${product.defaultPriceProduct}`}>
             Comprar agora
-          </button>
+          </LinkButton>
         </ProductDescription>
       </ProductContainer>
     </>
@@ -95,7 +69,6 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
     expand: ['default_price'],
   })
 
-  console.log(product)
   const price = product.default_price as Stripe.Price
 
   return {
@@ -110,6 +83,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         }).format(price.unit_amount / 100),
         description: product.description,
         defaultPriceId: price.id,
+        defaultPriceProduct: price.product
       },
     },
     revalidate: 60 * 60 * 2,

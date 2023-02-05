@@ -21,14 +21,49 @@ import { useForm } from 'react-hook-form'
 
 import axios from 'axios'
 
+import { useState } from 'react'
+import { ProductProps } from '../produtos/[id]'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import Stripe from 'stripe'
+import { stripe } from '@/lib/stripe'
 
 
-export default function getCheckoutData() {
+export default function getCheckoutData({product}):ProductProps {
   const { register, handleSubmit, setValue, setFocus } = useForm()
+  
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+  
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+      
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+      
+      const { checkoutUrl } = response.data
+      
+      window.location.href = checkoutUrl
+    } catch (err) {
+      setIsCreatingCheckoutSession(false)
+      
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
+  
+  let  [dataForm, setDataForm] = useState([])
 
   function handleGetData(data) {
-    alert('oie')
-    console.log(data)
+    const newData = data
+
+    setDataForm(newData)
+
+    // 1 - Redirecionar o cliente para a API de Pagamento
+
+    // 2 - Se o Pagamento foi confirmado enviar o newData para o e-mail com os produtos comprados.
+
+
   }
 
   const checkCep = (e:any) => {
@@ -46,7 +81,6 @@ export default function getCheckoutData() {
             setValue('estado', data.uf)
             setFocus('numero')
         })
-
        
     })
    
@@ -111,7 +145,10 @@ export default function getCheckoutData() {
               {...register('bairro')}
             />
           </Checkout>
-          <ButtonBuy type="submit">
+          <ButtonBuy 
+            disabled={isCreatingCheckoutSession}
+            onClick={handleBuyProduct} 
+          >
             <ShoppingCart size={22} />
             Confirmar compra
           </ButtonBuy>
@@ -119,4 +156,39 @@ export default function getCheckoutData() {
       </ContainerData>
     </Container>
   )
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{ params: { id: 'prod_NAyJZEm29Szh6w' } }],
+    fallback: true,
+  }
+}
+
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ params}) => {
+  const productId = params.id
+
+  const product = await stripe.products.retrieve(productId, {
+    expand: ['default_price'],
+  })
+
+  console.log(product)
+  const price = product.default_price as Stripe.Price
+
+  return {
+    props: {
+      product: {
+        id: product.id,
+        name: product.name,
+        imageUrl: product.images[0],
+        price: new Intl.NumberFormat('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }).format(price.unit_amount / 100),
+        description: product.description,
+        defaultPriceId: price.id,
+      },
+    },
+    revalidate: 60 * 60 * 2,
+  }
 }
