@@ -5,29 +5,24 @@ import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 
-import Link from 'next/link'
-
 import {
   ImageContainer,
   ProductContainer,
   ProductDescription,
   LinkButton,
 } from '@/styles/pages/produto'
-import axios from 'axios'
-import { useState } from 'react'
 
 export interface ProductProps {
-  product: {
-    id: string
-    name: string
-    imageUrl: string
-    price: string
-    description: string
-    defaultPriceId: string
-    defaultPriceProduct: string
-  }
+  id: string
+  name: string
+  imageUrl: string
+  price: string
+  description: string
+  defaultPriceId: string
+  defaultPriceProduct: string
 }
 export default function ProdutoId({ product }: ProductProps) {
+  console.log(product)
   return (
     <>
       <Head>
