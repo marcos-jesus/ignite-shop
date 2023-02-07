@@ -26,7 +26,7 @@ const roboto = Roboto({
   subsets: ['latin'],
 })
 
-export default function getCheckoutData({ product }: ProductProps){
+export default function useGetCheckoutData({ product }: ProductProps){
   
   const { register, handleSubmit, setValue, setFocus } = useForm()
 

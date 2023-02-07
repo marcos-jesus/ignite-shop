@@ -22,9 +22,6 @@ export interface ProductProps {
   defaultPriceProduct: string
 }
 export default function ProdutoId({ product }: ProductProps) {
-
-  const [data, setData] = useState('')
-  
   return (
     <>
       <Head>
