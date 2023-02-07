@@ -26,11 +26,11 @@ const roboto = Roboto({
   subsets: ['latin'],
 })
 
-export default function getCheckoutData({ product }): ProductProps {
-  const { register, handleSubmit, setValue, setFocus } = useForm()
+export default function getCheckoutData({ product }: ProductProps){
 
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
+  
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+  
 
   async function handleBuyProduct() {
     try {
@@ -57,6 +57,8 @@ export default function getCheckoutData({ product }): ProductProps {
 
     setDataForm(newData)
   }
+
+  const { register, handleSubmit, setValue, setFocus } = useForm()
 
   const checkCep = (e: any) => {
     const cep = e.target.value.replace(/\D/g, '')
