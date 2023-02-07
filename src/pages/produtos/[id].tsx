@@ -22,7 +22,6 @@ export interface ProductProps {
   defaultPriceProduct: string
 }
 export default function ProdutoId({ product }: ProductProps) {
-  console.log(product)
   return (
     <>
       <Head>
