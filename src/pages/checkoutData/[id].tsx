@@ -26,7 +26,7 @@ const roboto = Roboto({
   subsets: ['latin'],
 })
 
-export default function useGetCheckoutData({ product }: ProductProps){
+export default function useGetCheckoutData({product}: ProductProps) {
   
   const { register, handleSubmit, setValue, setFocus } = useForm()
 
@@ -48,7 +48,7 @@ export default function useGetCheckoutData({ product }: ProductProps){
   
   async function handleBuyProduct(data) {
     nodeMail()
-    
+
     try {
       setIsCreatingCheckoutSession(true)
 
