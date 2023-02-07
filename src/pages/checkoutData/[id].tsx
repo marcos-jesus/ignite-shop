@@ -27,8 +27,13 @@ const roboto = Roboto({
 })
 
 export default function getCheckoutData({ product }: ProductProps){
+  
+  const { register, handleSubmit, setValue, setFocus } = useForm()
 
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+  const [dataForm, setDataForm] = useState([])
+
   
   async function handleBuyProduct() {
     try {
@@ -48,15 +53,12 @@ export default function getCheckoutData({ product }: ProductProps){
     }
   }
 
-  const [dataForm, setDataForm] = useState([])
 
   function handleGetData(data) {
     const newData = data
-
     setDataForm(newData)
+    
   }
-
-  const { register, handleSubmit, setValue, setFocus } = useForm()
 
   const checkCep = (e: any) => {
     const cep = e.target.value.replace(/\D/g, '')
@@ -75,6 +77,8 @@ export default function getCheckoutData({ product }: ProductProps){
       })
     })
   }
+
+
 
   return (
     <Container className={roboto.className}>
