@@ -10,6 +10,7 @@ import {
   ProductDescription,
   LinkButton,
 } from '@/styles/pages/produto'
+import { useState } from 'react'
 
 export interface ProductProps {
   id: string
@@ -21,6 +22,9 @@ export interface ProductProps {
   defaultPriceProduct: string
 }
 export default function ProdutoId({ product }: ProductProps) {
+
+  const [data, setData] = useState('')
+  
   return (
     <>
       <Head>

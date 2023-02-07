@@ -33,7 +33,6 @@ export default function getCheckoutData({ product }: ProductProps){
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
   const [dataForm, setDataForm] = useState([])
-
   
   async function handleBuyProduct() {
     try {
