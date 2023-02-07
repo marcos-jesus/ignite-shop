@@ -1,4 +1,4 @@
-import { GetStaticProps, GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'

@@ -28,10 +28,8 @@ const roboto = Roboto({
 
 export default function getCheckoutData({ product }: ProductProps){
 
-  
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
   
-
   async function handleBuyProduct() {
     try {
       setIsCreatingCheckoutSession(true)
