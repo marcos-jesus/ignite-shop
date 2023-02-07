@@ -33,8 +33,22 @@ export default function useGetCheckoutData({ product }: ProductProps){
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
   const [dataForm, setDataForm] = useState([])
+
+
+  function handleGetData(data) {
+    const passData = data
+    setDataForm(passData)
+
+    handleBuyProduct(data)
+  }
+
+  function nodeMail() {
+    console.log(dataForm)
+  }
   
-  async function handleBuyProduct() {
+  async function handleBuyProduct(data) {
+    nodeMail()
+    
     try {
       setIsCreatingCheckoutSession(true)
 
@@ -53,11 +67,7 @@ export default function useGetCheckoutData({ product }: ProductProps){
   }
 
 
-  function handleGetData(data) {
-    const newData = data
-    setDataForm(newData)
-    
-  }
+  
 
   const checkCep = (e: any) => {
     const cep = e.target.value.replace(/\D/g, '')
@@ -124,7 +134,6 @@ export default function useGetCheckoutData({ product }: ProductProps){
           </Checkout>
           <ButtonBuy
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
           >
             <ShoppingCart size={22} />
             Confirmar compra
@@ -151,7 +160,6 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
     expand: ['default_price'],
   })
 
-  console.log(product)
   const price = product.default_price as Stripe.Price
 
   return {
@@ -161,6 +169,5 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         defaultPriceId: price.id  
       },
     },
-    revalidate: 60 * 60 * 2,
   }
 }
