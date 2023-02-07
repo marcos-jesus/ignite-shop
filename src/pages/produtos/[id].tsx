@@ -10,7 +10,6 @@ import {
   ProductDescription,
   LinkButton,
 } from '@/styles/pages/produto'
-import { useState } from 'react'
 
 export interface ProductProps {
   id: string
@@ -49,7 +48,13 @@ export default function ProdutoId({ product }: ProductProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [{ params: { id: 'prod_NAyJZEm29Szh6w' } }],
+    paths: [
+      { params: { id: 'prod_NAyJZEm29Szh6w' } },
+      { params: { id: 'prod_NAyHSEWg6HOJpg' } },
+      { params: { id: 'prod_NAyGRCKQc58KLv' } },
+      { params: { id: 'prod_NAyFBdCrVH61lp' } },
+      { params: { id: 'prod_NAyEo1A3tH0Me1' } },
+    ],
     fallback: true,
   }
 }
@@ -80,6 +85,6 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         defaultPriceProduct: price.product,
       },
     },
-    revalidate: 60 * 60 * 2,
+    revalidate: 60 * 60 * 1,
   }
 }

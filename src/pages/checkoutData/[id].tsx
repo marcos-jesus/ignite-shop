@@ -26,14 +26,13 @@ const roboto = Roboto({
   subsets: ['latin'],
 })
 
-export default function useGetCheckoutData({product}: ProductProps) {
-  
+export default function useGetCheckoutData({ product }: ProductProps) {
   const { register, handleSubmit, setValue, setFocus } = useForm()
 
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
 
   const [dataForm, setDataForm] = useState([])
-
 
   function handleGetData(data) {
     const passData = data
@@ -45,7 +44,7 @@ export default function useGetCheckoutData({product}: ProductProps) {
   function nodeMail() {
     console.log(dataForm)
   }
-  
+
   async function handleBuyProduct(data) {
     nodeMail()
 
@@ -66,9 +65,6 @@ export default function useGetCheckoutData({product}: ProductProps) {
     }
   }
 
-
-  
-
   const checkCep = (e: any) => {
     const cep = e.target.value.replace(/\D/g, '')
 
@@ -83,11 +79,11 @@ export default function useGetCheckoutData({product}: ProductProps) {
         setValue('cidade', data.localidade)
         setValue('estado', data.uf)
         setFocus('numero')
+
+        return setValue
       })
     })
   }
-
-
 
   return (
     <Container className={roboto.className}>
@@ -132,9 +128,7 @@ export default function useGetCheckoutData({product}: ProductProps) {
           <Checkout>
             <Input type="text" placeholder="Bairro" {...register('bairro')} />
           </Checkout>
-          <ButtonBuy
-            disabled={isCreatingCheckoutSession}
-          >
+          <ButtonBuy disabled={isCreatingCheckoutSession}>
             <ShoppingCart size={22} />
             Confirmar compra
           </ButtonBuy>
@@ -166,7 +160,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
     props: {
       product: {
         id: product.id,
-        defaultPriceId: price.id  
+        defaultPriceId: price.id,
       },
     },
   }
