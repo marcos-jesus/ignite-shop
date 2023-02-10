@@ -26,7 +26,7 @@ export default function Home({ products }: HomeProps) {
       perView: 3,
       spacing: 38,
     },
-  })  
+  })
 
   return (
     <>
